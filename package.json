@@ -1,0 +1,133 @@
+{
+  "name": "gd-code-check",
+  "displayName": "GD 代码清理器",
+  "description": "基于 Knip 检测和清理项目中的无用代码和依赖",
+  "version": "1.0.0",
+  "publisher": "caojianwei",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caojwaqzh/gdcodecheck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caojwaqzh/gdcodecheck/issues"
+  },
+  "homepage": "https://github.com/caojianwei/gdcodecheck#readme",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Linters"
+  ],
+  "keywords": [
+    "knip",
+    "typescript",
+    "javascript",
+    "unused code",
+    "dead code",
+    "clean",
+    "optimization"
+  ],
+  "icon": "resources/favicon.ico",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "knip-cleaner.scan",
+        "title": "扫描无用代码",
+        "category": "Knip",
+        "icon": "$(search)"
+      },
+      {
+        "command": "knip-cleaner.clean",
+        "title": "清理无用代码",
+        "category": "Knip",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "knip-cleaner.config",
+        "title": "配置 Knip",
+        "category": "Knip",
+        "icon": "$(gear)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "knip-cleaner.scan",
+          "group": "navigation@1",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "knip-cleaner.scan"
+        },
+        {
+          "command": "knip-cleaner.clean"
+        },
+        {
+          "command": "knip-cleaner.config"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "knip-cleaner.scan",
+          "group": "navigation",
+          "when": "resourceExtname == .ts || resourceExtname == .tsx || resourceExtname == .js || resourceExtname == .jsx"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Knip Code Cleaner",
+      "properties": {
+        "knip.autoScan": {
+          "type": "boolean",
+          "default": false,
+          "description": "启动时自动扫描项目"
+        },
+        "knip.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "显示扫描通知"
+        },
+        "knip.configFile": {
+          "type": "string",
+          "default": "knip.config.ts",
+          "description": "Knip 配置文件路径"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4",
+    "ts-loader": "^9.4.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "knip": "^3.0.0"
+  }
+} 
